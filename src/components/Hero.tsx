@@ -13,8 +13,8 @@ const Hero: React.FC<HeroProps> = ({ className }) => {
       {/* Artistic Background */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
-          alt="Artistic background"
+          src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+          alt="Urban neighborhood street view"
           className="w-full h-full object-cover"
         />
         {/* Overlay for better text readability */}
