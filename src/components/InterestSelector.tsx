@@ -14,14 +14,14 @@ const InterestSelector: React.FC<InterestSelectorProps> = ({
   className 
 }) => {
   const options = [
-    { value: 'museums', label: '🏛️ Museums & Galleries', category: 'culture' },
-    { value: 'food', label: '🍽️ Local Food & Markets', category: 'culinary' },
-    { value: 'parks', label: '🌳 Parks & Nature', category: 'outdoor' },
-    { value: 'history', label: '🏛️ Historical Sites', category: 'culture' },
-    { value: 'shopping', label: '🛍️ Shopping & Markets', category: 'retail' },
-    { value: 'nightlife', label: '🌙 Nightlife & Entertainment', category: 'entertainment' },
-    { value: 'architecture', label: '🏗️ Architecture & Design', category: 'culture' },
-    { value: 'local', label: '🏠 Local Neighborhoods', category: 'authentic' }
+    { value: 'museums', label: 'Museums & Galleries', icon: '🏛️', category: 'culture', color: 'from-purple-400 to-indigo-500' },
+    { value: 'food', label: 'Local Food & Markets', icon: '🍽️', category: 'culinary', color: 'from-red-400 to-pink-500' },
+    { value: 'parks', label: 'Parks & Nature', icon: '🌳', category: 'outdoor', color: 'from-green-400 to-emerald-500' },
+    { value: 'history', label: 'Historical Sites', icon: '🏛️', category: 'culture', color: 'from-amber-400 to-orange-500' },
+    { value: 'shopping', label: 'Shopping & Markets', icon: '🛍️', category: 'retail', color: 'from-pink-400 to-rose-500' },
+    { value: 'nightlife', label: 'Nightlife & Entertainment', icon: '🌙', category: 'entertainment', color: 'from-indigo-400 to-purple-500' },
+    { value: 'architecture', label: 'Architecture & Design', icon: '🏗️', category: 'culture', color: 'from-gray-400 to-slate-500' },
+    { value: 'local', label: 'Local Neighborhoods', icon: '🏠', category: 'authentic', color: 'from-teal-400 to-cyan-500' }
   ];
 
   const toggleInterest = (interest: string) => {
@@ -33,31 +33,57 @@ const InterestSelector: React.FC<InterestSelectorProps> = ({
   };
 
   return (
-    <div className={cn('space-y-4', className)}>
-      <h3 className="text-lg font-medium">Interests</h3>
-      <p className="text-sm text-muted-foreground">Select what you'd like to discover</p>
+    <div className={cn('space-y-6', className)}>
+      <div className="flex items-center space-x-3 mb-6">
+        <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-full flex items-center justify-center">
+          <span className="text-white text-lg">❤️</span>
+        </div>
+        <h3 className="text-2xl font-serif font-bold text-gray-800">Interests</h3>
+      </div>
       
-      <div className="grid md:grid-cols-2 gap-3">
+      <p className="text-gray-600 mb-6">Select what you'd like to discover on your adventure</p>
+      
+      <div className="grid md:grid-cols-2 gap-4">
         {options.map((option) => (
           <button
             key={option.value}
             onClick={() => toggleInterest(option.value)}
             className={cn(
-              'p-3 border rounded-lg text-left transition-all flex items-center space-x-3',
+              'p-4 border-2 rounded-xl text-left transition-all duration-300 hover:shadow-lg transform hover:scale-105 group',
               interests.includes(option.value)
-                ? 'border-orangery-500 bg-orangery-50'
-                : 'border-gray-200 hover:border-gray-300'
+                ? 'border-orange-400 bg-gradient-to-br from-orange-50 to-yellow-50 shadow-lg scale-105'
+                : 'border-gray-200 hover:border-orange-300 bg-white'
             )}
           >
-            <span className="text-lg">{option.label.split(' ')[0]}</span>
-            <span className="font-medium">{option.label.substring(3)}</span>
+            <div className="flex items-center space-x-3">
+              <div className={cn(
+                'w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold bg-gradient-to-br',
+                option.color
+              )}>
+                {option.icon}
+              </div>
+              <div className="flex-1">
+                <div className="font-semibold text-gray-800">{option.label}</div>
+                <div className="text-xs text-gray-500 capitalize">{option.category}</div>
+              </div>
+              {interests.includes(option.value) && (
+                <div className="w-6 h-6 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm">✓</span>
+                </div>
+              )}
+            </div>
           </button>
         ))}
       </div>
 
       {interests.length > 0 && (
-        <div className="text-sm text-muted-foreground">
-          Selected: {interests.length} interest{interests.length !== 1 ? 's' : ''}
+        <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 flex items-center space-x-3">
+          <div className="w-6 h-6 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-full flex items-center justify-center">
+            <span className="text-white text-sm">✓</span>
+          </div>
+          <span className="text-gray-700">
+            Selected: <span className="font-semibold text-orange-700">{interests.length} interest{interests.length !== 1 ? 's' : ''}</span>
+          </span>
         </div>
       )}
     </div>
