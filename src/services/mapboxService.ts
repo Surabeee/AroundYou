@@ -23,7 +23,7 @@ class MapboxService {
   constructor() {
     // In production, this would come from environment variables
     // For now, we'll use a placeholder
-    this.apiKey = 'YOUR_MAPBOX_API_KEY';
+    this.apiKey = 'pk.eyJ1Ijoic3VyYWJoaXRhbWJlIiwiYSI6ImNtY2dzajFhbTBscnEyd3IzYXp4b3hnZHAifQ.Yj_ZbgFGVNufroTIOVsQKg';
   }
 
   // Search for places within a radius

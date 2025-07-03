@@ -83,10 +83,12 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background: linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif tracking-tight;
+    @apply font-display tracking-tight;
+    color: #3A6351; /* earthy green for headings */
   }
 }
 
@@ -97,6 +99,10 @@
   
   .text-pretty {
     text-wrap: pretty;
+  }
+
+  .card-shadow {
+    box-shadow: 0 4px 24px 0 rgba(60, 60, 60, 0.08), 0 1.5px 4px 0 rgba(60, 60, 60, 0.04);
   }
 }
 
@@ -178,4 +184,13 @@ html.dark ::-webkit-scrollbar-thumb {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.animate-pulse-badge {
+  animation: pulse-badge 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes pulse-badge {
+  0% { transform: scale(1); filter: brightness(1); }
+  40% { transform: scale(1.15); filter: brightness(1.2); }
+  100% { transform: scale(1); filter: brightness(1); }
 }

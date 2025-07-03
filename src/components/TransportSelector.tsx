@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Train, Car, MapPin } from 'lucide-react';
@@ -40,37 +39,35 @@ const TransportSelector: React.FC<TransportSelectorProps> = ({
 
   return (
     <div className={cn('space-y-6', className)}>
-      <div className="flex items-center space-x-3 mb-6">
-        <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-full flex items-center justify-center">
-          <Train className="w-4 h-4 text-white" />
-        </div>
-        <h3 className="text-2xl font-serif font-bold text-gray-800">Transportation Mode</h3>
+      <div className="flex items-center gap-2 mb-6">
+        <span className="inline-flex items-center justify-center w-7 h-7 rounded-md bg-gray-100 border border-gray-200">
+          <Train className="w-4 h-4 text-gray-500" />
+        </span>
+        <h3 className="text-2xl font-extrabold tracking-tight text-gray-900 border-b-2 border-blue-100 pb-1">Transportation Mode</h3>
       </div>
       
       <div className="grid md:grid-cols-3 gap-4">
         {options.map((option) => {
           const IconComponent = option.icon;
+          const selected = transport === option.value;
           return (
             <button
               key={option.value}
               onClick={() => onTransportChange(option.value)}
               className={cn(
-                'p-6 border-2 rounded-xl text-left transition-all duration-300 hover:shadow-lg transform hover:scale-105 group',
-                transport === option.value
-                  ? 'border-orange-400 bg-gradient-to-br from-orange-50 to-yellow-50 shadow-lg scale-105'
-                  : 'border-gray-200 hover:border-orange-300 bg-white'
+                'flex items-center gap-3 p-4 border-2 rounded-xl shadow-sm transition-all duration-200 w-full text-left',
+                selected
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-200 bg-white hover:border-blue-300'
               )}
             >
-              <div className="flex items-center space-x-3 mb-3">
-                <div className={cn(
-                  'w-12 h-12 rounded-xl flex items-center justify-center text-white bg-gradient-to-br',
-                  option.color
-                )}>
-                  <IconComponent className="w-6 h-6" />
-                </div>
-                <div className="font-bold text-lg text-gray-800">{option.label}</div>
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded bg-gray-100 border border-gray-200">
+                <IconComponent className="w-5 h-5 text-gray-500" />
+              </span>
+              <div>
+                <div className="text-gray-900 font-semibold">{option.label}</div>
+                <div className="text-xs text-gray-500">{option.description}</div>
               </div>
-              <div className="text-sm text-gray-600">{option.description}</div>
             </button>
           );
         })}

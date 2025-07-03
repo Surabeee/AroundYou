@@ -1,13 +1,13 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 interface HeaderProps {
   className?: string;
+  forceDarkGlass?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ className }) => {
+const Header: React.FC<HeaderProps> = ({ className, forceDarkGlass }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -19,38 +19,40 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const darkGlass = forceDarkGlass || isScrolled;
   return (
     <header className={cn(
-      'fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300',
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-orange-100' 
-        : 'bg-white/90 backdrop-blur-md border-b border-gray-200/20',
+      `fixed top-6 left-1/2 transform -translate-x-1/2 z-50 max-w-6xl w-[98vw] backdrop-blur-5xl rounded-3xl border border-white/20 shadow-2xl flex items-center justify-between px-6 py-0 transition-all duration-300 overflow-hidden ${darkGlass ? 'bg-black/25' : 'bg-white/15'}`,
       className
     )}>
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <Link to="/" className="group flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-200">
-            <span className="text-white font-bold text-sm">A</span>
-          </div>
-          <span className="text-2xl font-serif font-bold tracking-tight bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-            AroundYou
-          </span>
+      {/* Glassy gradient overlay */}
+      <div className="absolute inset-0 pointer-events-none" style={{background: darkGlass ? 'linear-gradient(120deg,rgba(0,0,0,0.18) 0%,rgba(80,80,80,0.12) 100%)' : 'linear-gradient(120deg,rgba(255,255,255,0.18) 0%,rgba(120,180,255,0.12) 100%)'}} />
+      <div className="flex items-center justify-between w-full relative z-10" style={{ minHeight: '36px' }}>
+        <Link to="/" className="group flex items-center space-x-3 relative" style={{ minHeight: '36px' }}>
+          <img
+            src="/logo.png"
+            alt="AroundYou logo"
+            className="h-10 w-auto object-contain drop-shadow-md"
+            style={{ maxWidth: '140px' }}
+          />
+          <span className="sr-only">AroundYou</span>
         </Link>
-        
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-8 ml-auto">
           <Link 
             to="/" 
-            className="text-sm font-medium hover:text-orange-500 transition-all duration-200 relative group"
+            className="text-sm font-semibold text-white hover:text-white transition-all duration-200 relative group px-2 py-1 rounded-md hover:bg-white/10"
+            style={{ color: '#fff' }}
           >
             Home
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-yellow-400 group-hover:w-full transition-all duration-300"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-300 to-blue-500 group-hover:w-full transition-all duration-300"></span>
           </Link>
           <Link 
             to="/explore" 
-            className="text-sm font-medium hover:text-orange-500 transition-all duration-200 relative group"
+            className="text-sm font-semibold text-white hover:text-white transition-all duration-200 relative group px-2 py-1 rounded-md hover:bg-white/10"
+            style={{ color: '#fff' }}
           >
             Explore
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-yellow-400 group-hover:w-full transition-all duration-300"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-300 to-blue-500 group-hover:w-full transition-all duration-300"></span>
           </Link>
         </nav>
       </div>

@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -17,6 +16,21 @@ const HomePage = () => {
   const [interests, setInterests] = useState([]);
   const [location, setLocation] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isLightBgSection, setIsLightBgSection] = useState(false);
+  const planSectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = planSectionRef.current;
+    if (!section) return;
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        setIsLightBgSection(entry.isIntersecting);
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   const handleGenerateAdventure = async () => {
     if (!location) {
@@ -40,11 +54,14 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-yellow-50">
-      <Header />
+      <Header forceDarkGlass={isLightBgSection} />
       
       <Hero />
       
-      <section className="py-24 md:py-32 bg-gradient-to-br from-white via-orange-50/30 to-yellow-50/30 relative overflow-hidden">
+      <section
+        ref={planSectionRef}
+        className="py-24 md:py-32 bg-gradient-to-br from-white via-orange-50/30 to-yellow-50/30 relative overflow-hidden"
+      >
         {/* Decorative Elements */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-orange-200 to-transparent"></div>
         <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-orange-100 to-yellow-100 rounded-full blur-3xl opacity-60"></div>
@@ -69,7 +86,7 @@ const HomePage = () => {
 
           <div className="grid gap-12 max-w-4xl mx-auto">
             <FadeIn delay={100}>
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-orange-100/50 hover:shadow-2xl transition-all duration-300">
+              <div id="start-journey-input" className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-orange-100/50 hover:shadow-2xl transition-all duration-300">
                 <LocationInput 
                   location={location}
                   onLocationChange={setLocation}

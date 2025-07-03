@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -22,6 +21,7 @@ export default {
 			fontFamily: {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
 				serif: ['Georgia', 'serif'],
+				display: ['Quicksand', 'Inter', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -68,12 +68,19 @@ export default {
 					700: '#374151',
 					800: '#1f2937',
 					900: '#111827',
-				}
+				},
+				travel: {
+					green: '#3A6351',
+					blue: '#3B82F6',
+					orange: '#F59E42',
+					sand: '#F5E9DA',
+					sky: '#E0F2FE',
+				},
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				lg: '1.2rem',
+				md: '0.8rem',
+				sm: '0.5rem'
 			},
 			keyframes: {
 				'accordion-down': {
