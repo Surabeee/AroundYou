@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import FadeIn from '@/components/animations/FadeIn';
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const MUMBAI_MOCK_ADVENTURE = {
   title: "Mumbai Marvels: A Day of Discovery",
@@ -101,15 +102,16 @@ const AdventurePage = () => {
       }
 
       // 2. Call your backend to get real places
-      const response = await fetch('/api/places', {
+      const response = await fetch(`${API_URL}/api/places`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           lng,
           lat,
+          location: config.location, // Pass location name for Gemini context
           interests: config.interests,
           transport: config.transport,
-          radius: config.radius * 1000 // convert km to meters if needed
+          radius: config.radius // Keep as km for Gemini
         })
       });
       if (!response.ok) {

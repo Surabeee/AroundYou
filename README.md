@@ -52,13 +52,40 @@ npm run dev
 
 ## What technologies are used for this project?
 
-This project is built with .
+This project is built with:
 
 - Vite
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
+- Express.js (Backend)
+- Mapbox API (Geocoding & Mapping)
+- Google Gemini AI (Place Suggestions)
+
+## Environment Setup
+
+To run this project locally, you'll need to set up the following environment variables:
+
+Create a `.env` file in the root directory with:
+
+```env
+# Mapbox API Key for geocoding and mapping
+MAPBOX_TOKEN=your_mapbox_token_here
+
+# Google Gemini API Key for AI place suggestions
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Server port (optional, defaults to 5000)
+PORT=5000
+```
+
+### Getting API Keys:
+
+1. **Mapbox Token**: Sign up at [Mapbox](https://www.mapbox.com/) and get your access token
+2. **Gemini API Key**: Get your API key from [Google AI Studio](https://aistudio.google.com/) (free tier available)
+
+The app will fallback to Mapbox Search Box API if Gemini API is not available.
 
 ## How can I deploy this project?
 

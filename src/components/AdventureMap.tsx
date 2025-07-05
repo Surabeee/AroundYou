@@ -6,6 +6,15 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { mapboxService } from '@/services/mapboxService';
 
+// Suppress react-map-gl deprecation warnings
+const originalWarn = console.warn;
+console.warn = (...args) => {
+  if (args[0] && typeof args[0] === 'string' && args[0].includes('defaultProps')) {
+    return; // Suppress defaultProps warnings
+  }
+  originalWarn.apply(console, args);
+};
+
 interface Stop {
   id: number;
   name: string;
