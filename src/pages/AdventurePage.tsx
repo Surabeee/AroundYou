@@ -206,19 +206,19 @@ const AdventurePage = () => {
           </FadeIn>
 
           <div className="grid lg:grid-cols-2 gap-8">
+            <FadeIn delay={300}>
+              <AdventureMap
+                stops={adventure.stops}
+                currentStop={currentStop}
+              />
+            </FadeIn>
+
             <FadeIn delay={200}>
               <AdventureStops
                 stops={adventure.stops}
                 currentStop={currentStop}
                 onStopComplete={handleStopComplete}
                 onStopSelect={setCurrentStop}
-              />
-            </FadeIn>
-
-            <FadeIn delay={300}>
-              <AdventureMap
-                stops={adventure.stops}
-                currentStop={currentStop}
               />
             </FadeIn>
           </div>

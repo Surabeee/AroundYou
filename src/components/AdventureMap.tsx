@@ -65,8 +65,8 @@ const AdventureMap: React.FC<AdventureMapProps> = ({
     longitude: stops[currentStop].coordinates[0],
     latitude: stops[currentStop].coordinates[1],
     zoom: 15,
-    width: 400,
-    height: 300,
+    width: '100%',
+    height: '100%',
   });
   const mapRef = React.useRef<any>(null);
   // Search bar state
@@ -119,8 +119,41 @@ const AdventureMap: React.FC<AdventureMapProps> = ({
         </Button>
       </form>
       {searchError && <div className="text-red-500 text-sm mb-2">{searchError}</div>}
+
+      {/* Embedded Map - moved up */}
+      <div style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px 0 rgba(60,60,60,0.08)', marginBottom: 24, width: '100%' }}>
+        <ReactMapGL
+          ref={mapRef}
+          {...viewport}
+          width="100%"
+          height={350}
+          mapboxApiAccessToken={MAPBOX_TOKEN}
+          mapStyle="mapbox://styles/mapbox/streets-v11"
+          onViewportChange={setViewport}
+        >
+          {stops.map((stop, idx) => (
+            <Marker longitude={stop.coordinates[0]} latitude={stop.coordinates[1]} key={idx}>
+              <div style={{ background: '#fff', borderRadius: '50%', padding: 4, boxShadow: '0 1px 4px rgba(0,0,0,0.15)' }}>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="#f97316" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="6" cy="6" r="5" />
+                </svg>
+              </div>
+            </Marker>
+          ))}
+          {/* Marker for searched location */}
+          {searchMarker && (
+            <Marker longitude={Number(searchMarker.lon)} latitude={Number(searchMarker.lat)}>
+              <div style={{ background: '#2563eb', borderRadius: '50%', padding: 6, boxShadow: '0 1px 8px rgba(37,99,235,0.15)' }} title={searchMarker.display_name}>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="#2563eb" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="9" cy="9" r="8" stroke="#fff" strokeWidth="2" fill="#2563eb" />
+                </svg>
+              </div>
+            </Marker>
+          )}
+        </ReactMapGL>
+      </div>
+
       <h2 className="text-2xl font-serif font-medium mb-6">Route Map</h2>
-      
       <div className="border rounded-lg p-8 bg-gray-50 min-h-[400px] flex items-center justify-center">
         <div className="text-center">
           <div className="text-4xl mb-4"></div>
@@ -166,36 +199,6 @@ const AdventureMap: React.FC<AdventureMapProps> = ({
           <div className="font-medium mb-1">Completed</div>
           <div className="text-green-600">{stops.filter(s => s.completed).length}</div>
         </div>
-      </div>
-
-      <div style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 4px 24px 0 rgba(60,60,60,0.08)' }}>
-        <ReactMapGL
-          ref={mapRef}
-          {...viewport}
-          mapboxApiAccessToken={MAPBOX_TOKEN}
-          mapStyle="mapbox://styles/mapbox/streets-v11"
-          onViewportChange={setViewport}
-        >
-          {stops.map((stop, idx) => (
-            <Marker longitude={stop.coordinates[0]} latitude={stop.coordinates[1]} key={idx}>
-              <div style={{ background: '#fff', borderRadius: '50%', padding: 4, boxShadow: '0 1px 4px rgba(0,0,0,0.15)' }}>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="#f97316" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="6" cy="6" r="5" />
-                </svg>
-              </div>
-            </Marker>
-          ))}
-          {/* Marker for searched location */}
-          {searchMarker && (
-            <Marker longitude={Number(searchMarker.lon)} latitude={Number(searchMarker.lat)}>
-              <div style={{ background: '#2563eb', borderRadius: '50%', padding: 6, boxShadow: '0 1px 8px rgba(37,99,235,0.15)' }} title={searchMarker.display_name}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="#2563eb" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="9" cy="9" r="8" stroke="#fff" strokeWidth="2" fill="#2563eb" />
-                </svg>
-              </div>
-            </Marker>
-          )}
-        </ReactMapGL>
       </div>
     </div>
   );
